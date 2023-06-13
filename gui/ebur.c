@@ -44,46 +44,59 @@
 #endif
 
 /*************************/
-#define CX  (178.5f)
-#define CY  (196.5f)
+//#define CX  (345.5f) //(178.5f)
+//#define CY  (381.5f) //(196.5f)
+#define CX  (325.5f) //(178.5f)
+#define CY  (430.5f) //(196.5f)
 
-#define COORD_ALL_W 356
-#define COORD_ALL_H 412
+#define COORD_ALL_W 640//356
+#define COORD_ALL_H 800//412
 
 #define COORD_MTR_X 23
-#define COORD_MTR_Y 52
+#define COORD_MTR_Y 100 //52
 
-#define COORD_MX_X 298  // max display X
+#define COORD_MX_X 578//298  // max display X
 #define COORD_TP_X 25   // true peak
 
 #define COORD_ML_Y 11   // TOP
 
 #define COORD_BI_X 8    // integrating X
 #define COORD_BR_X (COORD_MX_X-65) // bottom right info
-#define COORD_BI_Y 341  // integrating
+#define COORD_BI_Y 700 //341  // integrating
 
-#define COORD_LEVEL_X 118 //used w/ COORD_ML_Y
-#define COORD_BINFO_Y 314 // used with COORD_BI_X
+#define COORD_LEVEL_X 130 //118 //used w/ COORD_ML_Y
+#define COORD_BINFO_Y 644 //314 // used with COORD_BI_X
 
 #define CLPX(X) (X+13)
 #define CLPY(Y) (Y+6)
 
 /* some width and radii, */
 
-#define COORD_BINTG_W 340
+#define COORD_BINTG_W 600 //340
 
-#define COORD_BINFO_W 117
-#define COORD_BINFO_H 40
-#define COORD_LEVEL_W 120
-#define COORD_LEVEL_H 24
+#define COORD_BINFO_W 222 //117
+#define COORD_BINFO_H 76 //40
+#define COORD_LEVEL_W 320 //120
+#define COORD_LEVEL_H 64 //24
 
-#define RADIUS   (120.0f)
-#define RADIUS1  (122.0f)
-#define RADIUS5  (125.0f)
-#define RADIUS10 (130.0f)
-#define RADIUS19 (139.0f)
-#define RADIUS22 (142.0f)
-#define RADIUS23 (143.0f)
+/*
+#define RADIUS   (228.0f) //(120.0f)
+#define RADIUS1  (231.8f) //(122.0f)
+#define RADIUS5  (237.5f) //(125.0f)
+#define RADIUS10 (247.0f) //(130.0f)
+#define RADIUS19 (264.1f) //(139.0f)
+#define RADIUS22 (269.8f) //(142.0f)
+#define RADIUS23 (271.7f) //(143.0f)
+*/
+
+#define RADIUS   (240.0f) //(120.0f)
+#define RADIUS1  (244.0f) //(122.0f)
+#define RADIUS5  (250.0f) //(125.0f)
+#define RADIUS10 (260.0f) //(130.0f)
+#define RADIUS19 (278.0f) //(139.0f)
+#define RADIUS22 (284.0f) //(142.0f)
+#define RADIUS23 (286.0f) //(143.0f)
+
 
 /*************************/
 
@@ -434,12 +447,22 @@ static void ring_leds(EBUrUI* ui, int *l, int *m) {
 
 static void initialize_font_cache(EBUrUI* ui) {
 	ui->fontcache = true;
+	/*
 	ui->font[FONT_M14] = pango_font_description_from_string("Mono 18px");
 	ui->font[FONT_M12] = pango_font_description_from_string("Mono 14px");
 	ui->font[FONT_M09] = pango_font_description_from_string("Mono 12px");
 	ui->font[FONT_M08] = pango_font_description_from_string("Mono 10px");
 	ui->font[FONT_S09] = pango_font_description_from_string("Sans 12px");
 	ui->font[FONT_S08] = pango_font_description_from_string("Sans 10px");
+	*/
+	
+	ui->font[FONT_M14] = pango_font_description_from_string("Mono 36px");
+	ui->font[FONT_M12] = pango_font_description_from_string("Mono 18px");
+	ui->font[FONT_M09] = pango_font_description_from_string("Mono 16px");
+	ui->font[FONT_M08] = pango_font_description_from_string("Mono 14px");
+	ui->font[FONT_S09] = pango_font_description_from_string("Sans 16px");
+	ui->font[FONT_S08] = pango_font_description_from_string("Sans 12px");
+	
 	assert(ui->font[FONT_M14]);
 	assert(ui->font[FONT_M12]);
 	assert(ui->font[FONT_M09]);
@@ -452,45 +475,16 @@ static void initialize_font_cache(EBUrUI* ui) {
  * Areas for partial exposure
  */
 
+#define MPI90  1.570796
+#define MPI01  0.01745329	
 static void leveldisplaypath(cairo_t *cr) {
-	cairo_move_to(cr,CLPX( 37), CLPY(190));
-	cairo_line_to(cr,CLPX( 55), CLPY(124));
-	cairo_line_to(cr,CLPX( 98), CLPY( 80));
-	cairo_line_to(cr,CLPX(165), CLPY( 61));
-	cairo_line_to(cr,CLPX(231), CLPY( 80));
-	cairo_line_to(cr,CLPX(276), CLPY(126));
-	cairo_line_to(cr,CLPX(292), CLPY(190));
-	cairo_line_to(cr,CLPX(292), CLPY(200));
-	cairo_line_to(cr,CLPX(268), CLPY(268));
-	cairo_line_to(cr,CLPX(315), CLPY(268));
-	cairo_line_to(cr,CLPX(330), CLPY(200));
-	cairo_line_to(cr,CLPX(330), CLPY(185));
-	cairo_line_to(cr,CLPX(310), CLPY(112));
-	cairo_line_to(cr,CLPX(242), CLPY( 47));
-	cairo_line_to(cr,CLPX(165), CLPY( 33));
-	cairo_line_to(cr,CLPX( 87), CLPY( 47));
-	cairo_line_to(cr,CLPX( 20), CLPY(113));
-	cairo_line_to(cr,CLPX(  0), CLPY(190));
-
-#if 0 // outside
-	cairo_line_to(cr,  0, 0);
-	cairo_line_to(cr,  COORD_ALL_W, 0);
-	cairo_line_to(cr,  COORD_ALL_W, COORD_ALL_H);
-	cairo_line_to(cr,  0, COORD_ALL_H);
-	//cairo_line_to(cr,  0, 0);
-	cairo_line_to(cr,  CLP(0), CLP(190));
-#endif
-
-	cairo_line_to(cr, CLPX( 25), CLPY(267));
-	cairo_line_to(cr, CLPX( 80), CLPY(332));
-	cairo_line_to(cr, CLPX(165), CLPY(345));
-	cairo_line_to(cr, CLPX(180), CLPY(345));
-	cairo_line_to(cr, CLPX(180), CLPY(315));
-	cairo_line_to(cr, CLPX(160), CLPY(316));
-	cairo_line_to(cr, CLPX(101), CLPY(301));
-	cairo_line_to(cr, CLPX( 54), CLPY(254));
-	cairo_close_path(cr);
-
+	cairo_move_to(cr, CX, CY + RADIUS23);
+	cairo_arc (cr, CX, CY, RADIUS23, MPI90, MPI01);
+	cairo_line_to(cr, CX + RADIUS5, CY);
+	cairo_arc_negative (cr, CX, CY, RADIUS5, MPI01, MPI90);
+	cairo_close_path (cr);
+	//cairo_set_source_rgba (cr, .5, .5, .2, .8);
+	//cairo_fill_preserve(cr);
 }
 
 const static cairo_rectangle_t rect_is_level = {COORD_MTR_X, COORD_MTR_Y, 320, 290}; // match w/COORD_BINFO
@@ -552,7 +546,8 @@ static void prepare_lvl_surface (EBUrUI* ui) {
 	cairo_paint(cr);
 	cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
-	cairo_set_line_width(cr, 2.5);
+	//cairo_set_line_width(cr, 2.5);
+	cairo_set_line_width(cr, 4.5);
 	cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
 	CairoSetSouerceRGBA(c_g30);
 
@@ -881,51 +876,62 @@ static bool expose_event(RobWidget* handle, cairo_t* cr, cairo_rectangle_t *ev) 
 	CairoSetSouerceRGBA(c_g30);
 	cairo_stroke(cr);
 
-	if (rect_intersect_a(ev, 12, COORD_ML_Y, 10, 50)) {
+	if (rect_intersect_a(ev, 1, COORD_ML_Y, 20, 50)) {
 		DEBUG_DRAW("version");
-		write_text(cr,
+		/*write_text(cr,
 				ui->nfo ? ui->nfo : "x42 EBU R128 LV2",
 				FONT(FONT_S08), 1, 15, 1.5 * M_PI, 7, c_g30);
+				*/
+		write_text(cr,
+				"x42 EBU R128 LV2",
+				FONT(FONT_S08), 1, 15, 1.5 * M_PI, 7, c_g30);
+		
 	}
 
-	if (rect_intersect_a(ev, COORD_LEVEL_X, COORD_ML_Y, COORD_LEVEL_W, COORD_LEVEL_H)) {
+	if (rect_intersect_a(ev, COORD_LEVEL_X, COORD_ML_Y + 15, COORD_LEVEL_W, COORD_LEVEL_H)) {
 		DEBUG_DRAW("Big Level Num");
 		/* big level as text */
 		ui->prev_lvl[0] = rings ? ui->ls : ui->lm;
 		sprintf(buf, "%s %s", format_lufs(lufb0, LUFS(ui->prev_lvl[0])), lufs ? "LUFS" : "LU");
-		write_text(cr, buf, FONT(FONT_M14), CX , COORD_ML_Y+4, 0, 8, c_wht);
+		//write_text(cr, buf, FONT(FONT_M14), CX - 30 , COORD_ML_Y+20, 0, 8, c_wht);
+		write_text(cr, buf, FONT(FONT_M14), CX - 30 , COORD_ML_Y+15, 0, 8, c_wht);
 	}
 
-	int trw = lufs ? 87 : 75;
+	//int trw = lufs ? 87 : 75;
+	int trw = lufs ? 120 : 100;
 
-	if (rect_intersect_a(ev, COORD_MX_X, COORD_ML_Y+25, 40, 30)) {
+	//if (rect_intersect_a(ev, COORD_MX_X, COORD_ML_Y+25, 40, 30)) {
+	if (rect_intersect_a(ev, COORD_MX_X, COORD_ML_Y+25, 50, 30)) {	
 		DEBUG_DRAW("Max Legend");
 		/* max legend */
 		CairoSetSouerceRGBA(c_g20);
-		rounded_rectangle (cr, COORD_MX_X, COORD_ML_Y+25, 40, 30, 10);
+		//rounded_rectangle (cr, COORD_MX_X, COORD_ML_Y+25, 40, 30, 10);
+		rounded_rectangle (cr, COORD_MX_X, COORD_ML_Y+35, 40, 45, 10);
 		cairo_fill (cr);
-		write_text(cr, !rings ? "Mom":"Short", FONT(FONT_S08), COORD_MX_X+20, COORD_ML_Y+25+15, 0, 8, c_wht);
+		write_text(cr, !rings ? "Mom":"Short", FONT(FONT_S08), COORD_MX_X+20, COORD_ML_Y+35+22, 0, 8, c_wht);
 	}
 
-	if (rect_intersect_a(ev, COORD_MX_X+50-trw, COORD_ML_Y, trw, 38)) {
+	//if (rect_intersect_a(ev, COORD_MX_X+50-trw, COORD_ML_Y, trw, 38)) {
+	if (rect_intersect_a(ev, COORD_MX_X+50-trw, COORD_ML_Y, trw, 50)) {
 		DEBUG_DRAW("Max Level");
 		/* max level background */
 		CairoSetSouerceRGBA(c_g30);
-		rounded_rectangle (cr, COORD_MX_X+50-trw, COORD_ML_Y, trw, 38, 10);
+		//rounded_rectangle (cr, COORD_MX_X+50-trw, COORD_ML_Y, trw, 38, 10);
+		rounded_rectangle (cr, COORD_MX_X+50-trw, COORD_ML_Y, trw, 50, 10);
 		cairo_fill (cr);
 		/* display max level as text */
 		ui->prev_lvl[1] = rings ? ui->ms: ui->mm;
 		sprintf(buf, "Max:\n%s %s", format_lufs(lufb0, LUFS(ui->prev_lvl[1])), lufs ? "LUFS" : "LU");
-		write_text(cr, buf, FONT(FONT_M09), COORD_MX_X+50-10, COORD_ML_Y+5, 0, 7, c_wht);
+		write_text(cr, buf, FONT(FONT_M09), COORD_MX_X+50-10, COORD_ML_Y+3, 0, 7, c_wht);
 	}
 
 	if (dbtp && rect_intersect_a(ev, COORD_TP_X+10, COORD_ML_Y+25, 40, 30)) {
 		DEBUG_DRAW("dBTP Legend");
 		/* true-peak legend */
 		CairoSetSouerceRGBA(c_g20);
-		rounded_rectangle (cr, COORD_TP_X+10, COORD_ML_Y+25, 40, 30, 10);
+		rounded_rectangle (cr, COORD_TP_X+10, COORD_ML_Y+25, 40, 40, 10);
 		cairo_fill (cr);
-		write_text(cr, "True", FONT(FONT_S08), COORD_TP_X+30, COORD_ML_Y+25+15, 0, 8, c_wht);
+		write_text(cr, "True", FONT(FONT_S08), COORD_TP_X+30, COORD_ML_Y+25+20, 0, 8, c_wht);
 	}
 
 	if (dbtp && rect_intersect_a(ev, COORD_TP_X, COORD_ML_Y, 75, 38)) {
@@ -942,8 +948,8 @@ static bool expose_event(RobWidget* handle, cairo_t* cr, cairo_rectangle_t *ev) 
 		/* true-peak val */
 		ui->prev_lvl[4] = ui->tp;
 		sprintf(buf, "%s", format_lufs(lufb0, ui->tp));
-		write_text(cr, buf, FONT(FONT_M09), COORD_TP_X+65, COORD_ML_Y+5, 0, 7, c_wht);
-		write_text(cr, "dBTP", FONT(FONT_M09), COORD_TP_X+65, COORD_ML_Y+19, 0, 7, c_wht);
+		write_text(cr, buf, FONT(FONT_M09), COORD_TP_X+65, COORD_ML_Y, 0, 7, c_wht);
+		write_text(cr, "dBTP", FONT(FONT_M09), COORD_TP_X+65, COORD_ML_Y+16, 0, 7, c_wht);
 	}
 
 #if 1
@@ -973,6 +979,7 @@ static bool expose_event(RobWidget* handle, cairo_t* cr, cairo_rectangle_t *ev) 
 		ui->circ_val = cl;
 
 		const int ulp = plus24 ? 120 : 108;
+				
 		if (cl > ulp) cl = ulp;
 		if (cm > ulp) cm = ulp;
 
@@ -1008,7 +1015,8 @@ static bool expose_event(RobWidget* handle, cairo_t* cr, cairo_rectangle_t *ev) 
 		}
 
 		if (cm > 0) {
-			cairo_set_line_width(cr, 2.5);
+			//cairo_set_line_width(cr, 2.5);
+			cairo_set_line_width(cr, 4.5);
 			cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
 			const float mang = M_PI * .5 + MPI72 * (float) cm;
 			float cc = sinf(mang);
@@ -1023,41 +1031,41 @@ static bool expose_event(RobWidget* handle, cairo_t* cr, cairo_rectangle_t *ev) 
 		cairo_paint(cr);
 	}
 
-	int bottom_max_offset = 50;
+	int bottom_max_offset = 90;
 
 	if (ui->il > -60 || robtk_cbtn_get_active(ui->btn_start)) {
 		bottom_max_offset = 3;
 	}
-	if (rect_intersect_a(ev, COORD_BI_X+10, COORD_BI_Y, 40, 30) && bottom_max_offset == 3) {
+	if (rect_intersect_a(ev, COORD_BI_X+10, COORD_BI_Y+25, 40, 30) && bottom_max_offset == 3) {
 		DEBUG_DRAW("Integ. 'Long' Legend");
 		CairoSetSouerceRGBA(c_g20);
-		rounded_rectangle (cr, COORD_BI_X+10, COORD_BI_Y, 40, 30, 10);
+		rounded_rectangle (cr, COORD_BI_X+10, COORD_BI_Y+25, 40, 30, 10);
 		cairo_fill (cr);
-		write_text(cr, "Long", FONT(FONT_S08), COORD_BI_X+30 , COORD_BI_Y+18, 0,  5, c_wht);
+		write_text(cr, "Long", FONT(FONT_S08), COORD_BI_X+30 , COORD_BI_Y+18+25, 0,  5, c_wht);
 	}
 	/* integrated level text display */
-	if (rect_intersect_a(ev, COORD_BI_X, COORD_BI_Y+20, COORD_BINTG_W, 40) && bottom_max_offset == 3) {
+	if (rect_intersect_a(ev, COORD_BI_X, COORD_BI_Y+20+25, COORD_BINTG_W, 70) && bottom_max_offset == 3) {
 		DEBUG_DRAW("Integrated Level");
 		CairoSetSouerceRGBA(c_g30);
-		rounded_rectangle (cr, COORD_BI_X, COORD_BI_Y+20, COORD_BINTG_W, 40, 10);
+		rounded_rectangle (cr, COORD_BI_X, COORD_BI_Y+20+25, COORD_BINTG_W, 40, 10);
 		cairo_fill (cr);
 
 		if (ui->il > -60) {
 			sprintf(buf, "Int:   %s %s", format_lufs(lufb0, LUFS(ui->il)), lufs ? "LUFS" : "LU");
-			write_text(cr, buf, FONT(FONT_M09), COORD_BI_X+10 , COORD_BI_Y+40, 0,  6, c_wht);
+			write_text(cr, buf, FONT(FONT_M09), COORD_BI_X+10 , COORD_BI_Y+40+25, 0,  6, c_wht);
 		} else {
 			sprintf(buf, "[Integrating over 5 sec]");
-			write_text(cr, buf, FONT(FONT_S09), COORD_BI_X+10 , COORD_BI_Y+40, 0,  6, c_wht);
+			write_text(cr, buf, FONT(FONT_S09), COORD_BI_X+10 , COORD_BI_Y+40+25, 0,  6, c_wht);
 		}
 
 		if (ui->rx > -60.0 && ui->rn > -60.0) {
 			sprintf(buf, "Range: %s..%s %s (%4.1f)",
 					format_lufs(lufb0, LUFS(ui->rn)), format_lufs(lufb1, LUFS(ui->rx)),
 					lufs ? "LUFS" : "LU", (ui->rx - ui->rn));
-			write_text(cr, buf, FONT(FONT_M09), COORD_BI_X+10 , COORD_BI_Y+55, 0,  6, c_wht);
+			write_text(cr, buf, FONT(FONT_M09), COORD_BI_X+10 , COORD_BI_Y+55+25, 0,  6, c_wht);
 		} else {
 			sprintf(buf, "[Collecting 10 sec range.]");
-			write_text(cr, buf, FONT(FONT_S09), COORD_BI_X+10 , COORD_BI_Y+55, 0,  6, c_wht);
+			write_text(cr, buf, FONT(FONT_S09), COORD_BI_X+10 , COORD_BI_Y+55+25, 0,  6, c_wht);
 		}
 
 		/* clock */
@@ -1077,28 +1085,32 @@ static bool expose_event(RobWidget* handle, cairo_t* cr, cairo_rectangle_t *ev) 
 			int minutes = ((int)floorf(ui->it / 60)) % 60;
 			sprintf(buf, "%dh%02d'", hours, minutes);
 		}
-		write_text(cr, buf, FONT(FONT_M12), COORD_BINTG_W-7, COORD_BI_Y+50, 0,  4, c_wht);
+		write_text(cr, buf, FONT(FONT_M12), COORD_BINTG_W-7, COORD_BI_Y+50+25, 0,  4, c_wht);
 	}
 
-	if (rect_intersect_a(ev, COORD_BR_X+115-trw, COORD_BI_Y-50+bottom_max_offset, trw, 40) && redraw_part != 1) {
+	//if (rect_intersect_a(ev, COORD_BR_X+115-trw, COORD_BI_Y-50+bottom_max_offset, trw, 40) && redraw_part != 1) {
+	if (rect_intersect_a(ev, COORD_BR_X+115-trw, COORD_BI_Y-70+bottom_max_offset, trw, 50) && redraw_part != 1) {
 		DEBUG_DRAW("Bottom Level");
 		/* bottom level text display */
-		trw = lufs ? 117 : 105;
+		//trw = lufs ? 117 : 105;
+		trw = lufs ? 155 : 140;
+		
 		//printf("BOTTOM LVL @ %d+%d %dx%d\n", COORD_BR_X+115-trw, 305+bottom_max_offset, trw, 40);
 		CairoSetSouerceRGBA(c_g20);
-		rounded_rectangle (cr, COORD_BR_X+64, COORD_BI_Y-50+bottom_max_offset, 40, 30, 10);
+		rounded_rectangle (cr, COORD_BR_X+64, COORD_BI_Y-80+bottom_max_offset, 40, 40, 10);
 		cairo_fill (cr);
 		CairoSetSouerceRGBA(c_g30);
-		rounded_rectangle (cr, COORD_BR_X+115-trw, COORD_BI_Y-30+bottom_max_offset, trw, 40, 10);
+		//rounded_rectangle (cr, COORD_BR_X+115-trw, COORD_BI_Y-30+bottom_max_offset, trw, 40, 10);
+		rounded_rectangle (cr, COORD_BR_X+115-trw, COORD_BI_Y-55+bottom_max_offset, trw, 50, 10);
 		cairo_fill (cr);
 
 		ui->prev_lvl[2] = !rings ? ui->ls : ui->lm;
 		ui->prev_lvl[3] = !rings ? ui->ms : ui->mm;
-		write_text(cr, rings ? "Mom":"Short", FONT(FONT_S08), COORD_BR_X+85, COORD_BI_Y-45+bottom_max_offset, 0, 8, c_wht);
+		write_text(cr, rings ? "Mom":"Short", FONT(FONT_S08), COORD_BR_X+85, COORD_BI_Y-75+bottom_max_offset, 0, 8, c_wht);
 		sprintf(buf, "%s %s", format_lufs(lufb0, LUFS(ui->prev_lvl[2])), lufs ? "LUFS" : "LU");
-		write_text(cr, buf, FONT(FONT_M09), COORD_BR_X+105, COORD_BI_Y-25+bottom_max_offset, 0, 7, c_wht);
+		write_text(cr, buf, FONT(FONT_M09), COORD_BR_X+105, COORD_BI_Y-52+bottom_max_offset, 0, 7, c_wht);
 		sprintf(buf, "Max:%s %s", format_lufs(lufb0, LUFS(ui->prev_lvl[3])), lufs ? "LUFS" : "LU");
-		write_text(cr, buf, FONT(FONT_M09), COORD_BR_X+105, COORD_BI_Y-10+bottom_max_offset, 0, 7, c_wht);
+		write_text(cr, buf, FONT(FONT_M09), COORD_BR_X+105, COORD_BI_Y-35+bottom_max_offset, 0, 7, c_wht);
 	}
 
 #if 0
@@ -1163,7 +1175,7 @@ static void invalidate_changed(EBUrUI* ui, int what) {
 		const float pl = rings ? ui->ms : ui->mm;
 		if (rintf(pl * 10.0f) != rintf(ui->prev_lvl[1] * 10.0f)) {
 			ui->fasttracked[1] = true;
-			queue_tiny_area(ui->m0, COORD_MX_X-32, COORD_ML_Y, 87, 38);  // top side w/o LU/FS
+			queue_tiny_area(ui->m0, COORD_MX_X-68, COORD_ML_Y, 132, 50);  // top side w/o LU/FS
 			//queue_tiny_area(ui->m0, COORD_MX_X, COORD_ML_Y+25, 30, 30);// top side tab
 		}
 	}
@@ -1174,7 +1186,7 @@ static void invalidate_changed(EBUrUI* ui, int what) {
 		 // BIG -- when integrating
 			if (!ui->fasttracked[3]) {
 				ui->fasttracked[3] = true;
-				queue_tiny_area(ui->m0, COORD_BI_X, COORD_BI_Y+20, COORD_BINTG_W, 45);   // bottom bar
+				queue_tiny_area(ui->m0, COORD_BI_X, COORD_BI_Y+20, COORD_BINTG_W, 75);   // bottom bar
 			}
 		}
 
@@ -1233,7 +1245,8 @@ static void invalidate_changed(EBUrUI* ui, int what) {
 		if (ui->circ_max != cm || ui->circ_val != cl) {
 			// TODO invalidate changed parts only
 			// -> also update ring-lvl filter in expose_area
-			INVALIDATE_RECT(COORD_MTR_X, COORD_MTR_Y, 320, 290); // XXX
+			//INVALIDATE_RECT(COORD_MTR_X, COORD_MTR_Y, 320, 290); // XXX
+			INVALIDATE_RECT(COORD_MTR_X, COORD_MTR_Y, COORD_ALL_W - COORD_MTR_X, COORD_ALL_W - COORD_MTR_X); // XXX 620, 562
 		}
 	}
 }
@@ -1276,7 +1289,8 @@ static void invalidate_histogram_line(EBUrUI* ui, int p) {
 		ui->fasthist = true;
 	} else if (!ui->fullhist) {
 		ui->fullhist = true;
-		INVALIDATE_RECT(43, 68, 245, 245);
+		//INVALIDATE_RECT(43, 68, 245, 245);
+		INVALIDATE_RECT(COORD_MTR_X, COORD_MTR_Y, COORD_ALL_W - COORD_MTR_X, COORD_ALL_W - COORD_MTR_X); // XXX 620, 562
 		//queue_draw(ui->m0); // trigger radar to be included..
 		//queue_draw_area(ui->m0, rect.x, rect.y, rect.width, rect.height);
 	}
@@ -1548,6 +1562,14 @@ instantiate(
 	ui->redraw_labels = TRUE;
 
 	ui_enable(ui);
+	
+	//My custom defauls
+	printf("SAPISTA inits to LUFS, short term, and true peak\n");
+	robtk_rbtn_set_active(ui->cbx_lufs, true);
+	robtk_rbtn_set_active(ui->cbx_ring_short, false); //Init the ring meter in Momentary integration
+	robtk_rbtn_set_active(ui->cbx_hist_short, true); //Init the radar in short_time integration
+	robtk_cbtn_set_active(ui->cbx_truepeak, true);
+	
 	return ui;
 }
 

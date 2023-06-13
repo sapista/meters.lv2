@@ -1,6 +1,13 @@
 meters.lv2 - Audio Level Meters
 ===============================
 
+===============================
+This version is a fork with the goal of tweaking the GUI of the EBU R128 metter to make it fit better in my raspberrypi Display which is 1280x800 px.
+
+
+===============================
+
+
 meters.lv2 is a collection of audio-level meters with GUI in LV2 plugin format.
 
 It includes needle style meters (mono and stereo variants)
@@ -51,7 +58,7 @@ Compiling these plugin requires the LV2 SDK, gnu-make, a c-compiler,
 libpango, libcairo and openGL (sometimes called: glu, glx, mesa).
 
 ```bash
-  git clone https://github.com/x42/meters.lv2.git
+  git clone https://github.com/sapista/meters.lv2.git
   cd meters.lv2
   make submodules
   make
