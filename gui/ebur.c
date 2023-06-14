@@ -46,33 +46,33 @@
 /*************************/
 //#define CX  (345.5f) //(178.5f)
 //#define CY  (381.5f) //(196.5f)
-#define CX  (325.5f) //(178.5f)
-#define CY  (430.5f) //(196.5f)
+#define CX  (260.5f) //(178.5f)
+#define CY  (323.5f) //(430.5f) //(196.5f)
 
-#define COORD_ALL_W 640//356
-#define COORD_ALL_H 800//412
+#define COORD_ALL_W 520//356
+#define COORD_ALL_H 650//800-150 //412
 
 #define COORD_MTR_X 23
 #define COORD_MTR_Y 100 //52
 
-#define COORD_MX_X 578//298  // max display X
+#define COORD_MX_X 462//298  // max display X
 #define COORD_TP_X 25   // true peak
 
 #define COORD_ML_Y 11   // TOP
 
 #define COORD_BI_X 8    // integrating X
 #define COORD_BR_X (COORD_MX_X-65) // bottom right info
-#define COORD_BI_Y 700 //341  // integrating
+#define COORD_BI_Y 560 //558 //341  // integrating
 
 #define COORD_LEVEL_X 130 //118 //used w/ COORD_ML_Y
-#define COORD_BINFO_Y 644 //314 // used with COORD_BI_X
+#define COORD_BINFO_Y 521 //314 // used with COORD_BI_X
 
 #define CLPX(X) (X+13)
 #define CLPY(Y) (Y+6)
 
 /* some width and radii, */
 
-#define COORD_BINTG_W 600 //340
+#define COORD_BINTG_W 486 //340
 
 #define COORD_BINFO_W 222 //117
 #define COORD_BINFO_H 76 //40
@@ -89,13 +89,13 @@
 #define RADIUS23 (271.7f) //(143.0f)
 */
 
-#define RADIUS   (240.0f) //(120.0f)
-#define RADIUS1  (244.0f) //(122.0f)
-#define RADIUS5  (250.0f) //(125.0f)
-#define RADIUS10 (260.0f) //(130.0f)
-#define RADIUS19 (278.0f) //(139.0f)
-#define RADIUS22 (284.0f) //(142.0f)
-#define RADIUS23 (286.0f) //(143.0f)
+#define RADIUS   (195.0f) //(120.0f)
+#define RADIUS1  (198.0f) //(122.0f)
+#define RADIUS5  (202.0f) //(125.0f)
+#define RADIUS10 (211.0f) //(130.0f)
+#define RADIUS19 (225.0f) //(139.0f)
+#define RADIUS22 (230.0f) //(142.0f)
+#define RADIUS23 (232.0f) //(143.0f)
 
 
 /*************************/
@@ -1031,7 +1031,7 @@ static bool expose_event(RobWidget* handle, cairo_t* cr, cairo_rectangle_t *ev) 
 		cairo_paint(cr);
 	}
 
-	int bottom_max_offset = 90;
+	int bottom_max_offset = 68;//90;
 
 	if (ui->il > -60 || robtk_cbtn_get_active(ui->btn_start)) {
 		bottom_max_offset = 3;
@@ -1089,7 +1089,7 @@ static bool expose_event(RobWidget* handle, cairo_t* cr, cairo_rectangle_t *ev) 
 	}
 
 	//if (rect_intersect_a(ev, COORD_BR_X+115-trw, COORD_BI_Y-50+bottom_max_offset, trw, 40) && redraw_part != 1) {
-	if (rect_intersect_a(ev, COORD_BR_X+115-trw, COORD_BI_Y-70+bottom_max_offset, trw, 50) && redraw_part != 1) {
+	if (rect_intersect_a(ev, COORD_BR_X+115-trw, COORD_BI_Y-50+bottom_max_offset, trw, 50) && redraw_part != 1) {
 		DEBUG_DRAW("Bottom Level");
 		/* bottom level text display */
 		//trw = lufs ? 117 : 105;
@@ -1097,20 +1097,20 @@ static bool expose_event(RobWidget* handle, cairo_t* cr, cairo_rectangle_t *ev) 
 		
 		//printf("BOTTOM LVL @ %d+%d %dx%d\n", COORD_BR_X+115-trw, 305+bottom_max_offset, trw, 40);
 		CairoSetSouerceRGBA(c_g20);
-		rounded_rectangle (cr, COORD_BR_X+64, COORD_BI_Y-80+bottom_max_offset, 40, 40, 10);
+		rounded_rectangle (cr, COORD_BR_X+64, COORD_BI_Y-60+bottom_max_offset, 40, 40, 10);
 		cairo_fill (cr);
 		CairoSetSouerceRGBA(c_g30);
 		//rounded_rectangle (cr, COORD_BR_X+115-trw, COORD_BI_Y-30+bottom_max_offset, trw, 40, 10);
-		rounded_rectangle (cr, COORD_BR_X+115-trw, COORD_BI_Y-55+bottom_max_offset, trw, 50, 10);
+		rounded_rectangle (cr, COORD_BR_X+115-trw, COORD_BI_Y-35+bottom_max_offset, trw, 50, 10);
 		cairo_fill (cr);
 
 		ui->prev_lvl[2] = !rings ? ui->ls : ui->lm;
 		ui->prev_lvl[3] = !rings ? ui->ms : ui->mm;
-		write_text(cr, rings ? "Mom":"Short", FONT(FONT_S08), COORD_BR_X+85, COORD_BI_Y-75+bottom_max_offset, 0, 8, c_wht);
+		write_text(cr, rings ? "Mom":"Short", FONT(FONT_S08), COORD_BR_X+85, COORD_BI_Y-55+bottom_max_offset, 0, 8, c_wht);
 		sprintf(buf, "%s %s", format_lufs(lufb0, LUFS(ui->prev_lvl[2])), lufs ? "LUFS" : "LU");
-		write_text(cr, buf, FONT(FONT_M09), COORD_BR_X+105, COORD_BI_Y-52+bottom_max_offset, 0, 7, c_wht);
+		write_text(cr, buf, FONT(FONT_M09), COORD_BR_X+105, COORD_BI_Y-32+bottom_max_offset, 0, 7, c_wht);
 		sprintf(buf, "Max:%s %s", format_lufs(lufb0, LUFS(ui->prev_lvl[3])), lufs ? "LUFS" : "LU");
-		write_text(cr, buf, FONT(FONT_M09), COORD_BR_X+105, COORD_BI_Y-35+bottom_max_offset, 0, 7, c_wht);
+		write_text(cr, buf, FONT(FONT_M09), COORD_BR_X+105, COORD_BI_Y-15+bottom_max_offset, 0, 7, c_wht);
 	}
 
 #if 0
